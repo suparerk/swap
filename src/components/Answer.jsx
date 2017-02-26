@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 // import { Provider } from 'react-redux';
-// import store from '../store';
-
-// import Word from './Word.jsx';
-
-// import logo from '../logo.svg';
-// import '../App.css';
 
 
-class App extends Component {
+class Answer extends Component {
   constructor(){
     super();
     this.state = {
@@ -16,18 +10,17 @@ class App extends Component {
       shuffled: ''
     }
   }
-  update(e){
-    let shuffled_arr = ((input) => {
-      let input_arr = Array.from(e.target.value)
-      for (let i = input.length; i; i--) {
+  shuffle(input){
+    for (let i = input.length; i; i--) {
         let j = Math.floor(Math.random() * i);
         [input[i - 1], input[j]] = [input[j], input[i - 1]];
-      }
-      return input;
-    })(Array.from(e.target.value));
-
+    }
+  }
+  update(e){
+    var arr = Array.from(e.target.value)
+    this.shuffle(arr)
     this.setState({input: e.target.value})
-    this.setState({shuffled: shuffled_arr})
+    this.setState({shuffled: arr})
 
   }
   render() {
