@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Card from './card/card';
+import Card from './card/card.jsx';
 
 class AppRoot extends Component {
   constructor(){
@@ -11,6 +11,7 @@ class AppRoot extends Component {
       validate: [],
       checked: false
     }
+    this.update = this.update.bind(this);
     this.swap = this.swap.bind(this);
     this.mark = this.mark.bind(this);
 
