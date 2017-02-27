@@ -9,10 +9,12 @@ class AppRoot extends Component {
       shuffled: [],
       pair: [],
       validate: [],
-      checked: false
+      checked: false,
+      notification: ''
     }
     this.update = this.update.bind(this);
     this.swap = this.swap.bind(this);
+    this.checkPosition = this.checkPosition.bind(this);
     this.mark = this.mark.bind(this);
 
   }
@@ -27,6 +29,7 @@ class AppRoot extends Component {
 
     this.setState({input: e.target.value})
     this.setState({shuffled: shuffled_arr})
+    this.checkPosition(shuffled_arr);
 
   }
   swap(c) {
@@ -43,23 +46,34 @@ class AppRoot extends Component {
     }
     this.setState({pair: pair})
     this.setState({shuffled: shuffled})
-    this.mark();
+    this.checkPosition();
   }
-  mark(){
+  checkPosition(shuffled){
     let input = this.state.input
-    let shuffled = this.state.shuffled
+    shuffled = shuffled || this.state.shuffled
     let result = [];
     shuffled.forEach(((i, index) => {
         result.push(i === input[index])
     }));
     this.setState({validate: result})
+    this.setState({notification: ""})
+
+  }
+  mark(){
+    if(!this.state.validate.includes(false)){
+      this.setState({notification: "Good job!"})
+    }
+    else
+    {
+      this.setState({notification: "Try again :)"})
+    }
   }
   render() {
-    let items = this.state.shuffled     
+    let items = this.state.shuffled
     return (
-      <div className="App w3-content">
+      <div className="App w3-content w3-padding-128">
         <div className="w3-row-padding">
-          <div className="w3-green w3-container w3-third">
+          <div className="w3-pink w3-container w3-third">
             <h1>Your word here:</h1>
           </div>
           <div className="w3-container w3-twothird">
@@ -68,34 +82,22 @@ class AppRoot extends Component {
               onChange={this.update.bind(this)} />
           </div>
         </div>
-        <div className="w3-continer">
+        <div className="w3-continer w3-padding-128">
           {items.map((item, index) =>
             <Card key={index} index={index} char={item} swap={this.swap} checked={this.state.validate[index]}/> )}
         </div>
-        <div className="w3-continer w3-margin-top w3-row-padding">
-          <button className="w3-button w3-block w3-red" onClick={this.mark.bind(this)}>Mark it</button>
+        <div className="w3-continer w3-margin-top w3-row-padding w3-padding-128">
+          <button className="w3-button w3-block w3-teal" onClick={ () => {this.checkPosition(items); this.mark()}}><h2>Mark it</h2></button>
         </div>
-        <h1>{this.state.validate.toString()}</h1>
-        <div><pre>{JSON.stringify(this.state, null, 2) }</pre></div>
+        <div className="w3-continer w3-row-padding">
+          <div className="w3-panel w3-center w3-red ">
+            <h2>{this.state.notification}</h2>
+          </div>
+        </div>
       </div>
     );
   }
 }
-/*
 
-const Cards = (props) => {
-  const checked = props && props.checked;
-  let className = "w3-col s1 w3-blue w3-center w3-card w3-padding-16 w3-margin";
-  console.log(checked);
-  if(checked) {
-    className.replace('w3-blue', 'w3-green');
-  }
-  console.log(checked);
-  console.log("props", props);
-
-  return (<div className={className}>
-    <h2 onClick={() => { props.swap(props) }}>{props.char}</h2>
-  </div>);
-}*/
 
 export default AppRoot;

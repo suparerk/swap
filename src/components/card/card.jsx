@@ -20,19 +20,14 @@ export default class Card extends Component {
     this.setState({checkedClass: this.getClassName(newProps.checked)})
   }
 
-  componentWillMount(){
-    console.log("=======")
-    console.log(this.state)
-    // this.setState({checked: this.props.mark})
-    // this.state.mark();
-    // this.setState({checkedClass: this.getClassName(this.props.checked)})
-  }
-
-
   render() {
     return (
-      <div className={`w3-col s1 ${this.state.checkedClass} w3-center w3-card w3-padding-16 w3-margin`}>
-        <h2 onClick={() => { console.log('clicked');this.props.swap(this.props) }}>{this.props.char}</h2>
+      <div className={`w3-col s2 ${this.state.checkedClass} w3-center w3-card w3-padding-16 w3-margin`}>
+        <h1
+        className="w3-padding-32"
+        onClick={() => { console.log('clicked');this.props.swap(this.props) }}>
+        {this.props.char}
+        </h1>
       </div>
     );
   }
