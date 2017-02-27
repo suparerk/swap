@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from './card/card';
 
 class AppRoot extends Component {
   constructor(){
@@ -68,21 +69,32 @@ class AppRoot extends Component {
         </div>
         <div className="w3-continer">
           {items.map((item, index) =>
-            <Cards key={index} index={index} char={item} swap={this.swap} checked={this.state.validate[index]}/> )}
+            <Card key={index} index={index} char={item} swap={this.swap} checked={this.state.validate[index]}/> )}
         </div>
         <div className="w3-continer w3-margin-top w3-row-padding">
           <button className="w3-button w3-block w3-red" onClick={this.mark.bind(this)}>Mark it</button>
         </div>
         <h1>{this.state.validate.toString()}</h1>
+        <div><pre>{JSON.stringify(this.state, null, 2) }</pre></div>
       </div>
     );
   }
 }
+/*
 
+const Cards = (props) => {
+  const checked = props && props.checked;
+  let className = "w3-col s1 w3-blue w3-center w3-card w3-padding-16 w3-margin";
+  console.log(checked);
+  if(checked) {
+    className.replace('w3-blue', 'w3-green');
+  }
+  console.log(checked);
+  console.log("props", props);
 
-const Cards = (props) =>
-  <div className="w3-col s1 w3-blue w3-center w3-card w3-padding-16 w3-margin">
+  return (<div className={className}>
     <h2 onClick={() => { props.swap(props) }}>{props.char}</h2>
-  </div>
+  </div>);
+}*/
 
 export default AppRoot;
