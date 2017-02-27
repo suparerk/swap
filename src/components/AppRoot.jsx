@@ -50,7 +50,7 @@ class AppRoot extends Component {
     let shuffled = this.state.shuffled
     let result = [];
     shuffled.forEach(((i, index) => {
-        result.push(i == input[index])
+        result.push(i === input[index])
     }));
     this.setState({validate: result})
   }
