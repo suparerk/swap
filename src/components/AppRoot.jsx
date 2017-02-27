@@ -6,9 +6,13 @@ class AppRoot extends Component {
     this.state = {
       input: '',
       shuffled: [],
-      pair: []
+      pair: [],
+      validate: [],
+      checked: false
     }
     this.swap = this.swap.bind(this);
+    this.mark = this.mark.bind(this);
+
   }
   update(e){
     let shuffled_arr = ((input) => {
@@ -37,6 +41,16 @@ class AppRoot extends Component {
     }
     this.setState({pair: pair})
     this.setState({shuffled: shuffled})
+    this.mark();
+  }
+  mark(){
+    let input = this.state.input
+    let shuffled = this.state.shuffled
+    let result = [];
+    shuffled.forEach(((i, index) => {
+        result.push(i == input[index])
+    }));
+    this.setState({validate: result})
   }
   render() {
     let items = this.state.shuffled     
@@ -52,21 +66,23 @@ class AppRoot extends Component {
               onChange={this.update.bind(this)} />
           </div>
         </div>
-
         <div className="w3-continer">
           {items.map((item, index) =>
-            <Cards key={index} index={index} char={item} swap={this.swap} /> )}
+            <Cards key={index} index={index} char={item} swap={this.swap} checked={this.state.validate[index]}/> )}
         </div>
+        <div className="w3-continer w3-margin-top w3-row-padding">
+          <button className="w3-button w3-block w3-red" onClick={this.mark.bind(this)}>Mark it</button>
+        </div>
+        <h1>{this.state.validate.toString()}</h1>
       </div>
     );
   }
 }
 
 
-const Cards = (props) => 
+const Cards = (props) =>
   <div className="w3-col s1 w3-blue w3-center w3-card w3-padding-16 w3-margin">
     <h2 onClick={() => { props.swap(props) }}>{props.char}</h2>
   </div>
-
 
 export default AppRoot;
