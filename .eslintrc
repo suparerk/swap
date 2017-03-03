@@ -25,6 +25,7 @@ rules:
 env:
     phantomjs: true
     jasmine: true
+    browser: true
 plugins:
     - import
     # - flowtype
