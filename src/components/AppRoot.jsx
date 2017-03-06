@@ -43,15 +43,15 @@ class AppRoot extends Component {
       })(pair)
       pair = []
     }
-    this.setState({ pair: pair })
-    this.setState({ shuffled: shuffled })
+    this.setState({ pair })
+    this.setState({ shuffled })
     this.checkPosition()
   }
   checkPosition(shuffled) {
     const input = this.state.input
-    shuffled = shuffled || this.state.shuffled
+    const shuffledArray = shuffled || this.state.shuffled
     const result = []
-    shuffled.forEach(((i, index) => {
+    shuffledArray.forEach(((i, index) => {
       result.push(i === input[index])
     }))
     this.setState({ validate: result })
